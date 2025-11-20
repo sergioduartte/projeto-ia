@@ -2,27 +2,12 @@
 import heapq
 import networkx as nx
 
-
-def has_negative_weight(graph: nx.DiGraph) -> bool:
-    for _, _, data in graph.edges(data=True):
-        if data.get('weight', 1) < 0:
-            return True
-    return False
+from util import validator
 
 
 def dijkstra(graph: nx.DiGraph, start: str, end: str) -> tuple[float|None, list[str]]:
 
-    # validator.validate_objects(graph, start, end)
-
-    # validations that will be performed by validation.py
-    if graph is None or start is None or end is None:
-        raise AttributeError("Graph and nodes can't be None")
-    if graph.number_of_nodes() == 0:
-        raise ValueError("Graph can't be empty")
-    if not graph.has_node(start) or not graph.has_node(end):
-        raise ValueError("Graph must contain the specified nodes")
-    if has_negative_weight(graph):
-        raise ValueError("Graph can't contain edges with negative weight")
+    validator.validate_objects(graph, start, end)
     
     pred = {start: None} # keep predecessors nodes
     dist = {start: 0} # keep distance of node to start
@@ -55,7 +40,7 @@ def dijkstra(graph: nx.DiGraph, start: str, end: str) -> tuple[float|None, list[
                 pred[neighbor] = curr_node
                 heapq.heappush(unvisited, (new_dist, neighbor))
     
-    return float('inf'), None
+    return float('inf'), None # no path of start to end
 
 
 G = nx.DiGraph()
