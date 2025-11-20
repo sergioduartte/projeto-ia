@@ -10,7 +10,7 @@ def has_negative_weight(graph: nx.DiGraph) -> bool:
     return False
 
 
-def djikstra(graph: nx.DiGraph, start: str, end: str) -> tuple[float|None, list[str]]:
+def dijkstra(graph: nx.DiGraph, start: str, end: str) -> tuple[float|None, list[str]]:
 
     # validator.validate_objects(graph, start, end)
 
@@ -65,16 +65,16 @@ G.add_edge("C", "B", weight=1)
 G.add_edge("B", "D", weight=5)
 
 # start = end
-dist, path = djikstra(G, "A", "A")
+dist, path = dijkstra(G, "A", "A")
 assert dist == 0
 assert path == ["A"]
 
 # A → C → B < A → B
-dist, path = djikstra(G, "A", "B")
+dist, path = dijkstra(G, "A", "B")
 assert dist == 3
 assert path == ["A", "C", "B"]
 
 # no path of B to C
-dist, path = djikstra(G, "B", "C")
+dist, path = dijkstra(G, "B", "C")
 assert dist == float("inf")
 assert path == None
