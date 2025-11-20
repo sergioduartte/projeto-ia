@@ -231,33 +231,6 @@ def test_djikstra_with_two_paths_equivalent_in_cost():
     result = dijkstra(G, "A", "J")
     assert result == (24, ['A', 'C', 'H', 'J'])
 
-def test_djikstra_with_two_paths_equivalent_in_cost():
-    """
-    GIVEN um grafo onde existem dois caminhos com o mesmo custo entre o nó inicial e o nó de destino
-    WHEN dijkstra for chamado
-    THEN deve retornar o custo correto e o primeiro caminho encontrado
-    """ 
-    G = nx.DiGraph()
-    G.add_edge("A", "B", weight=10)
-    G.add_edge("A", "C", weight=15)
-    G.add_edge("A", "D", weight=10)
-    G.add_edge("B", "C", weight=5)
-    G.add_edge("B", "E", weight=7)
-    G.add_edge("C", "F", weight=3)
-    G.add_edge("C", "H", weight=7)
-    G.add_edge("D", "F", weight=10)
-    G.add_edge("E", "G", weight=12)
-    G.add_edge("E", "H", weight=12)
-    G.add_edge("F", "H", weight=4)
-    G.add_edge("F", "I", weight=10)
-    G.add_edge("G", "J", weight=7)
-    G.add_edge("H", "I", weight=1)
-    G.add_edge("H", "J", weight=2)
-    G.add_edge("I", "J", weight=1) 
-
-    result = dijkstra(G, "A", "J")
-    assert result == (24, ['A', 'C', 'H', 'J'])
-
 def test_dijkstra_direct_path_more_expensive():
     """
     GIVEN um grafo onde existe um caminho direto entre o nó inicial e o nó de destino,
