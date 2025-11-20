@@ -13,6 +13,19 @@ def test_dijkstra_with_graphNone():
     with pytest.raises(AttributeError):
         dijkstra(None, "A", "B")
 
+def test_dijkstra_with_empty_graph():
+    """
+    GIVEN um grafo com nós e sem arestas (grafo vazio)
+    WHEN dijkstra for chamado
+    THEN deve lançar uma exceção ValueError
+    """ 
+    G = nx.DiGraph()
+    G.add_nodes_from(["A", "B", "C"])
+
+    with pytest.raises(ValueError):
+     dijkstra(G, "A", "B") 
+
+
 def test_dijkstra_with_nodes_none():
     """
     GIVEN nenhum nó ou apenas um dos nós é passado para a função dijkstra
@@ -48,6 +61,7 @@ def test_djikstra_with_nonexistent_start_node():
     """
     G = nx.DiGraph()
     G.add_nodes_from(["B", "C", "D"])
+    G.add_edges_from([("B", "C"), ("C", "D")])
 
     with pytest.raises(ValueError):
      dijkstra(G, "A", "B")
@@ -60,6 +74,7 @@ def test_djikstra_with_nonexistent_end_node():
     """
     G = nx.DiGraph()
     G.add_nodes_from(["A", "B", "C"])
+    G.add_edges_from([("A", "B"), ("B", "C")])
 
     with pytest.raises(ValueError):
      dijkstra(G, "A", "D")
@@ -72,6 +87,7 @@ def test_djikstra_with_nonexistent_start_and_end_nodes():
     """ 
     G = nx.DiGraph()
     G.add_nodes_from(["B", "C", "D"])
+    G.add_edges_from([("B", "C"), ("C", "D")])
 
     with pytest.raises(ValueError):
      dijkstra(G, "A", "E")
