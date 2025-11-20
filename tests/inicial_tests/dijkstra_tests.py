@@ -131,7 +131,7 @@ def test_djikstra_with_inexistent_path():
     G.add_edge("H", "J", weight=2)
     G.add_edge("I", "J", weight=5)
 
-    result = dijkstra(G, "A", "K")
+    result = dijkstra(G, "B", "D")
     assert result == (float('inf'), None)
 
 def test_djikstra_with_same_start_and_end_node():
