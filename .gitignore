@@ -1,0 +1,35 @@
+# Bytecode
+_pycache_/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtualenvs
+.venv/
+venv/
+ENV/
+
+# Ferramentas e ambiente
+*.env
+.env.*
+*.sqlite3
+
+# Build / distribuição
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Pytest / cobertura
+.pytest_cache/
+.coverage
+htmlcov/
+
+# VSCode
+.vscode/
+
+# Logs
+*.log
+
+# Cache geral
+.cache/

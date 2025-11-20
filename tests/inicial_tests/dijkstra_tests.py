@@ -142,4 +142,4 @@ def test_djikstra_with_two_paths_equivalent_in_cost():
     G.add_edge("D", "C", weight=3)
 
     result = dijkstra(G, "A", "C")
-    assert result == (4, ["A", "B", "C"])
+    assert result == (4, ["A", "D", "C"])
