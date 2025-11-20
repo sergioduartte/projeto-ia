@@ -4,6 +4,7 @@
 Build a graph from a json
 '''
 
+import os
 import networkx as nx
 import json
 
@@ -26,12 +27,6 @@ def build_graph(path):
 
 # testing ----------------------
 
-archive_path = "/Users/lukasnascimentos/Faculdade/IA/projeto1/projeto-ia/data/testing_building.json"
-G = build_graph(archive_path)
-
-print("Nodes: ", G.nodes())
-print("Edges: ", G.edges(data=True))
-
 '''
 This is how the json looks like:
 {
@@ -44,6 +39,11 @@ This is how the json looks like:
     ]
 }
 '''
+archive_path = os.path.abspath()
+G = build_graph(archive_path)
+
+# print("Nodes: ", G.nodes())
+# print("Edges: ", G.edges(data=True))
 
 assert set(G.nodes()) == {'A', 'B', 'C', 'D', 'E', 'F'}
 
