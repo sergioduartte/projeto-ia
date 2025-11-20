@@ -10,8 +10,10 @@ def has_negative_weight(graph: nx.DiGraph) -> bool:
     return False
 
 
-def djikstra(graph: nx.DiGraph, start: str, end: str):
-    
+def djikstra(graph: nx.DiGraph, start: str, end: str) -> tuple[float|None, list[str]]:
+
+    # validator.validate_objects(graph, start, end)
+
     # validations that will be performed by validation.py
     if graph is None or start is None or end is None:
         raise AttributeError("Graph and nodes can't be None")
