@@ -18,7 +18,7 @@ def build_graph(path):
         data = json.load(graph)
 
     # Inicia e constrói o grafo
-    G = nx.Graph()
+    G = nx.DiGraph()
     for node, terminal, w in data["edges"]:
         G.add_edge(node, terminal, weight=w)
     
