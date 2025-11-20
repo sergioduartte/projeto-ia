@@ -1,4 +1,5 @@
 #coding: utf-8
+import heapq
 import networkx as nx
 
 
@@ -20,27 +21,23 @@ def all_edges_sizes(graph: nx.Graph):
     return nx.get_edge_attributes(graph, "weight")
 
 
-def djikstra(graph: nx.Graph, node_start: nx.Node, node_end: nx.Node):
+def djikstra(graph: nx.Graph, start: nx.Node, end: nx.Node):
     
-    # validações que depois serão feitas pelo validation.py
-    if graph is None or node_start is None or node_end is None:
+    # validations that will be performed by validation.py
+    if graph is None or start is None or end is None:
         raise AttributeError("Graph and nodes can't be None")
     if graph.number_of_nodes() == 0:
         raise ValueError("Graph can't be empty")
-    if not graph.has_node(node_start) or not graph.has_node(node_end):
+    if not graph.has_node(start) or not graph.has_node(end):
         raise ValueError("Graph must contain the specified nodes")
     if has_negative_weight(graph):
         raise ValueError("Graph can't contain edges with negative weight")
     
-    dist = {}
-    pred = {}
-    unvisited = set()
+    pred = {start: None} # keep predecessors nodes
+    dist = {start: 0} # keep distance of node to start
 
-    for node in graph.nodes:
-        dist[node] = float('inf')
-        pred[node] = None
-        unvisited.add(node)
-    dist[node_start] = 0
+    unvisited = []
+    heapq.heappush(unvisited, (0, start))
 
     while unvisited:
-        curr_node = # pegar vértice com menor distância dentro de dist
+        curr_dist, curr_node = 
