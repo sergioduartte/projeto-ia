@@ -8,6 +8,8 @@ from util import validator
 def dijkstra(graph: nx.DiGraph, start: str, end: str) -> tuple[float|None, list[str]]:
 
     validator.validate_objects(graph, start, end)
+    if start == end:
+        return 0, [start]
     
     pred = {start: None} # keep predecessors nodes
     dist = {start: 0} # keep distance of node to start
