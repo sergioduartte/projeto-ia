@@ -1,3 +1,8 @@
+"""
+Testes para a função build_graph.
+Garante que o grafo é criado corretamente e que as conexões são válidas.
+"""
+
 import json
 import pytest
 from core.build_graph import build_graph
@@ -77,11 +82,11 @@ def test_graph_valid(tmp_path):
     json_file = tmp_path / "graph.json"
     json_file.write_text(json.dumps(data))
 
-    G = build_graph(str(json_file))
+    graph = build_graph(str(json_file))
 
-    assert set(G.nodes()) == {"A", "B", "C", "D"}
-    assert G.number_of_nodes() == 4
-    assert G.number_of_edges() == 3
-    assert G["A"]["B"]["weight"] == 5
-    assert G["B"]["C"]["weight"] == 2
-    assert G["C"]["D"]["weight"] == 1
+    assert set(graph.nodes()) == {"A", "B", "C", "D"}
+    assert graph.number_of_nodes() == 4
+    assert graph.number_of_edges() == 3
+    assert graph["A"]["B"]["weight"] == 5
+    assert graph["B"]["C"]["weight"] == 2
+    assert graph["C"]["D"]["weight"] == 1
