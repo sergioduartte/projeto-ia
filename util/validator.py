@@ -58,9 +58,9 @@ def validate_graph_entry(path: str):
                 raise ValueError(f"The value of vertixA is empty")
             if vB == "" or vB == None:
                 raise ValueError(f"The value of vertixB is empty")
-            if type(w) != float:
+            if type(w) != float and type(w) != int:
                 raise ValueError(f"The value of Weight between {vA}\
-                                  and {vB} needs to be a float")
+                                  and {vB} needs to be a number")
             if w < 0:
                 raise ValueError(f"The value of Weight between {vA}\
                                   and {vB} needs to be positive")
@@ -104,7 +104,7 @@ def has_negative_weight(graph) -> bool:
 def validate_objects(graph, start: str, end: str):
     if graph is None or start is None or end is None:
         raise AttributeError("Graph and nodes can't be None")
-    if graph.number_of_nodes() == 0 or graph.number_of_edges() == 0:
+    if graph.number_of_edges() == 0:
         raise ValueError("Graph can't be empty")
     if not graph.has_node(start) or not graph.has_node(end):
         raise ValueError("Graph must contain the specified nodes")
