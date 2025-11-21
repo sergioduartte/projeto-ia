@@ -24,7 +24,7 @@ def main():
     except Exception as exc:
         print("Error in running Dijkstra: {exc}") 
 
-    print(f"The shortest path distance is {dist}km")
+    print(f"The shortest path distance is {dist:.1f} km")
     print("Path:", ", ".join(path))
 
     return 0
