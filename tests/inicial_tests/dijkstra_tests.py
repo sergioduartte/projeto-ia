@@ -230,3 +230,118 @@ def test_djikstra_with_two_paths_equivalent_in_cost():
 
     result = dijkstra(G, "A", "J")
     assert result == (24, ['A', 'C', 'H', 'J'])
+
+def test_dijkstra_direct_path_more_expensive():
+    """
+    GIVEN um grafo onde existe um caminho direto entre o nó inicial e o nó de destino,
+    porém esse caminho direto é mais caro que um caminho alternativo
+    WHEN dijkstra for chamado
+    THEN deve retornar o custo e o caminho mais barato (mesmo tendo mais arestas)
+    """ 
+    G = nx.DiGraph()
+    G.add_edge("M", "N", weight=10)
+    G.add_edge("M", "O", weight=15)
+    G.add_edge("M", "P", weight=10)
+    G.add_edge("M", "Z", weight=30) # Caminho direto
+    G.add_edge("N", "O", weight=5)
+    G.add_edge("N", "Q", weight=7)
+    G.add_edge("O", "R", weight=3)
+    G.add_edge("O", "T", weight=7)
+    G.add_edge("P", "R", weight=10)
+    G.add_edge("Q", "U", weight=12)
+    G.add_edge("Q", "T", weight=12)
+    G.add_edge("R", "T", weight=4)
+    G.add_edge("R", "V", weight=10)
+    G.add_edge("U", "W", weight=7)
+    G.add_edge("T", "V", weight=1)
+    G.add_edge("T", "Z", weight=2)
+    G.add_edge("V", "Z", weight=1)
+
+    result = dijkstra(G, "M", "Z")
+    assert result == (24, ['M', 'O', 'T', 'Z'])
+
+def test_dijkstra_direct_path_vs_two_alternatives():
+    """
+    GIVEN um grafo onde existe um caminho direto caro entre o nó inicial e o nó de destino,
+    e rotas alternativas mais baratas ou mais caras com múltiplas cidades intermediárias,
+    WHEN dijkstra for chamado,
+    THEN deve retornar o caminho de menor custo, mesmo que seja mais longo.
+    """
+    G = nx.DiGraph()
+    G.add_edge("L", "Z", weight=90) # caminho direto
+    G.add_edge("L", "A", weight=20)
+    G.add_edge("A", "D", weight=10)
+    G.add_edge("D", "Z", weight=40)  
+    G.add_edge("A", "X", weight=5)
+    G.add_edge("X", "Z", weight=60) 
+    G.add_edge("L", "B", weight=10)
+    G.add_edge("B", "C", weight=15)
+    G.add_edge("C", "E", weight=12)
+    G.add_edge("E", "Z", weight=18)  
+    G.add_edge("C", "F", weight=50) 
+    G.add_edge("F", "Z", weight=2)
+    G.add_edge("B", "G", weight=5)
+    G.add_edge("G", "H", weight=35)
+    G.add_edge("H", "Z", weight=40)  
+
+    result = dijkstra(G, "L", "Z")
+    assert result == (55, ["L", "B", "C", "E", "Z"])
+
+def test_dijkstra_cycle_graph_with_shortcut():
+    """
+    GIVEN um grafo onde as cidades formam um ciclo
+    e existe um caminho de menor custo alternativo entre duas cidades
+    WHEN dijkstra for chamado
+    THEN deve retornar o caminho direto mais barato
+    """
+    G = nx.DiGraph()
+
+    # ciclo
+    G.add_edge("A", "B", weight=10)
+    G.add_edge("B", "C", weight=10)
+    G.add_edge("C", "D", weight=10)
+    G.add_edge("D", "E", weight=10)
+    G.add_edge("E", "A", weight=10)
+
+    # caminho alternativo
+    G.add_edge("A", "D", weight=15)
+
+    result = dijkstra(G, "A", "D")
+    assert result == (15, ["A", "D"])
+
+def test_dijkstra_bottleneck_path_ignored():
+    """
+    GIVEN um grafo com vários caminhos possíveis entre o nó inicial e o nó de destino,
+    incluindo caminhos que parecem curtos mas possuem um gargalo no meio,
+    WHEN dijkstra for chamado,
+    THEN deve ignorar caminhos com arestas muito caras e escolher a rota realmente mais barata.
+    """
+    G = nx.DiGraph()
+    G.add_edge("S", "A", weight=5)
+    G.add_edge("A", "B", weight=5)
+    G.add_edge("B", "X", weight=3)
+    G.add_edge("X", "Z", weight=50)   
+    G.add_edge("B", "Y", weight=2)
+    G.add_edge("Y", "Z", weight=40)  
+    G.add_edge("S", "C", weight=10)
+    G.add_edge("C", "D", weight=5)
+    G.add_edge("D", "E", weight=5)
+    G.add_edge("E", "F", weight=5)
+    G.add_edge("F", "Z", weight=5)
+    G.add_edge("S", "G", weight=8)
+    G.add_edge("G", "H", weight=10)
+    G.add_edge("H", "Z", weight=20)
+    G.add_edge("A", "K", weight=1)
+    G.add_edge("K", "Z", weight=80)    
+
+    result = dijkstra(G, "S", "Z")
+
+    assert result == (30, ["S", "C", "D", "E", "F", "Z"])
+
+
+
+
+
+
+
+   
