@@ -1,0 +1,113 @@
+import pytest 
+import sys
+import os
+import networkx as nx
+import json
+
+from core.build_graph import build_graph
+
+def test_graphNone(tmp_path):
+    """
+    GIVEN um conjunto de arestas vazio
+    WHEN build_graph for chamado
+    THEN deve lançar uma exceção ValueError
+    """
+    data = {"edges": []}
+
+    json_file = tmp_path / "graph.json"
+    json_file.write_text(json.dumps(data))
+
+    with pytest.raises(Exception):
+        build_graph(str(json_file))
+
+def test_graph_edge_wrong_format(tmp_path):
+    """
+    GIVEN um conjunto de arestas inválido
+    WHEN build_graph for chamado
+    THEN deve lançar uma exceção ValueError
+    """
+    data = {"edges": [["A"]]}
+
+    json_file = tmp_path / "graph.json"
+    json_file.write_text(json.dumps(data))
+
+    with pytest.raises(Exception):
+        build_graph(str(json_file))
+
+def test_graph_negative_weight(tmp_path):
+    """
+    GIVEN um conjunto de arestas válido
+    WHEN build_graph for chamado
+    THEN deve lançar uma exceção ValueError
+    """
+    data = {"edges": [["A", "B", -3]]}
+
+    json_file = tmp_path / "graph.json"
+    json_file.write_text(json.dumps(data))
+
+    with pytest.raises(ValueError):
+        build_graph(str(json_file))
+
+def test_graph_loop_positive_weight(tmp_path):
+    """
+    GIVEN um conjunto de aresta com nós iguais mas peso diferente de zero
+    WHEN build_graph for chamado
+    THEN deve lançar uma exceção ValueError
+    """
+    data = {"edges": [["A", "A", 4]]}
+
+    json_file = tmp_path / "graph.json"
+    json_file.write_text(json.dumps(data))
+
+    with pytest.raises(ValueError):
+        build_graph(str(json_file))
+
+def test_graph_weight_not_number(tmp_path):
+    """
+    GIVEN um conjunto de arestas com peso diferente de um número
+    WHEN build_graph for chamado
+    THEN deve lançar uma exceção ValueError
+    """
+    data = {"edges": [["A", "B", "cinco"]]}
+
+    json_file = tmp_path / "graph.json"
+    json_file.write_text(json.dumps(data))
+
+    with pytest.raises(ValueError):
+        build_graph(str(json_file))
+
+def test_graph_valid(tmp_path):
+    """
+    GIVEN um conjunto de arestas válido
+    WHEN build_graph for chamado
+    THEN deve verificar que o grafo resultante está correto
+    """
+    data = {"edges": [["A", "B", 5],["B", "C", 2],["C", "D", 1],]}
+
+    json_file = tmp_path / "graph.json"
+    json_file.write_text(json.dumps(data))
+
+    G = build_graph(str(json_file))
+
+    assert set(G.nodes()) == {"A", "B", "C", "D"}
+    assert G.number_of_nodes() == 4
+    assert G.number_of_edges() == 3
+    assert G["A"]["B"]["weight"] == 5
+    assert G["B"]["C"]["weight"] == 2
+    assert G["C"]["D"]["weight"] == 1
+
+
+
+
+
+
+    
+
+
+
+
+
+
+    
+
+
