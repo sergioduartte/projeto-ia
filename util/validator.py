@@ -59,14 +59,14 @@ def validate_graph_entry(path: str):
             if vB == "" or vB == None:
                 raise ValueError(f"The value of vertixB is empty")
             if type(w) != float and type(w) != int:
-                raise ValueError(f"The value of Weight between {vA}\
-                                  and {vB} needs to be a number")
+                raise ValueError(f"The value of Weight between {vA} " + 
+                                 f"and {vB} needs to be a number")
             if w < 0:
-                raise ValueError(f"The value of Weight between {vA}\
-                                  and {vB} needs to be positive")
+                raise ValueError(f"The value of Weight between {vA} " + 
+                                 f"and {vB} needs to be positive")
             if w > 0 and vA == vB:
-                raise ValueError(f"The value of Weight between {vA}\
-                                  and {vB} needs to be zero!(loop)")
+                raise ValueError(f"The value of Weight between {vA} " + 
+                                 f"and {vB} needs to be zero!(loop)")
             edges.append([vA, vB])
 
         if len(edges) == 0: 
