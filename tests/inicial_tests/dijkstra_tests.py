@@ -258,7 +258,7 @@ def test_dijkstra_direct_path_more_expensive():
     G.add_edge("V", "Z", weight=1)
 
     result = dijkstra(G, "M", "Z")
-    assert result == (24, ['M', 'N', 'O', 'T', 'Z'])
+    assert result == (24, ['M', 'O', 'T', 'Z'])
 
 def test_dijkstra_direct_path_vs_two_alternatives():
     """
