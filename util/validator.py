@@ -15,22 +15,22 @@ def validate_entries(path: str, vA: str, vB: str):
     vB (str): vertexB.
 
     Raises:
-    Exceptions if the graph and the vertices are not valid. 
+    Exceptions if the graph and the vertices are not valid.
     """
-    
+
     excs = []
-    
+
     try:
         # valida o caminho se existe, se o arquivo é .json
         validate_path(path)
-    
+
         # valida se é possível gerar um grafo com o path, se o grafo é nulo e
         # checa se as arestas contém peso negativo
         validate_graph_entry(path)
-    
-        # valida se os vertices passados estao no grafo 
+
+        # valida se os vertices passados estao no grafo
         validate_vertices_entry(path, vA, vB)
-    
+
     except Exception as e:
         raise e
 
@@ -59,34 +59,34 @@ def validate_graph_entry(path: str):
             if vB == "" or vB == None:
                 raise ValueError(f"The value of vertixB is empty")
             if type(w) != float and type(w) != int:
-                raise ValueError(f"The value of Weight between {vA} " + 
+                raise ValueError(f"The value of Weight between {vA} " +
                                  f"and {vB} needs to be a number")
             if w < 0:
-                raise ValueError(f"The value of Weight between {vA} " + 
+                raise ValueError(f"The value of Weight between {vA} " +
                                  f"and {vB} needs to be positive")
             if w > 0 and vA == vB:
-                raise ValueError(f"The value of Weight between {vA} " + 
+                raise ValueError(f"The value of Weight between {vA} " +
                                  f"and {vB} needs to be zero!(loop)")
             edges.append([vA, vB])
 
-        if len(edges) == 0: 
+        if len(edges) == 0:
             raise ValueError("Graph can't be empty")
-        
+
         return edges
 
 
 def validate_vertices_entry(path: str, vA: str, vB: str):
     edges = validate_graph_entry(path)
-        
+
     if edges != None:
         not_foundA = True
         not_foundB = True
         for edge in edges:
             if vA in edge:
-                foundA = False
+                not_foundA = False
             if vB in edge:
-                foundB = False
-            if vA and vB:
+                not_foundB = False
+            if not not_foundA and not not_foundB:
                 break
         if not_foundA:
             raise ValueError(f"Node {vA} not found!")
