@@ -140,7 +140,7 @@ def validate_vertices_entry(path: str, v_a: str, v_b: str):
             if v_a in edge:
                 found_a = True
             if v_b in edge:
-                found_a = True
+                found_b = True
             if found_a and found_b:
                 break
         if not found_a:
