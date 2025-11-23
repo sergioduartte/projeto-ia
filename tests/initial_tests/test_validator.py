@@ -168,5 +168,3 @@ def test_validate_vertices_entry_vertex_a_not_found(tmp_path):
 
     with pytest.raises(ValueError, match="Node A not found"):
         validate_vertices_entry(str(file), "A", "C")
-
-
