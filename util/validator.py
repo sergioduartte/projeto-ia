@@ -89,30 +89,34 @@ def validate_graph_entry(path: str):
         If the graph is invalid.
     """
     data = validate_path(path)
+    edges = []
+
     if data is not None:
-        edges = []
         for v_a, v_b, w in data["edges"]:
-            if v_a == "" or v_a is None:
+            if not v_a:
                 raise ValueError("The value of vertixA is empty")
-            if v_b == "" or v_b is None:
+            if not v_b:
                 raise ValueError("The value of vertixB is empty")
             if not isinstance(w, (int, float)):
-                raise ValueError(f"The value of Weight between {v_b} " +
-                                 f"and {v_b} needs to be a number")
+                raise ValueError(
+                    f"The value of Weight between {v_a} and {v_b} needs to be a number"
+                )
             if w < 0:
-                raise ValueError(f"The value of Weight between {v_a} " +
-                                 f"and {v_b} needs to be positive")
+                raise ValueError(
+                    f"The value of Weight between {v_a} and {v_b} needs to be positive"
+                )
             if w > 0 and v_a == v_b:
-                raise ValueError(f"The value of Weight between {v_a} " +
-                                 f"and {v_b} needs to be zero!(loop)")
+                raise ValueError(
+                    f"The value of Weight between {v_a} and {v_b} needs to be zero!(loop)"
+                )
+
             edges.append([v_a, v_b])
 
-        if len(edges) == 0:
-            raise ValueError("Graph can't be empty")
+    if len(edges) == 0:
+        raise ValueError("Graph can't be empty")
 
-        return edges
+    return edges
 
-    return None
 
 
 def validate_vertices_entry(path: str, v_a: str, v_b: str):
