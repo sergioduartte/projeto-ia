@@ -93,9 +93,9 @@ def validate_graph_entry(path: str):
         edges = []
         for v_a, v_b, w in data["edges"]:
             if v_a == "" or v_a is None:
-                raise ValueError(f"The value of vertixA is empty")
+                raise ValueError("The value of vertixA is empty")
             if v_b == "" or v_b is None:
-                raise ValueError(f"The value of vertixB is empty")
+                raise ValueError("The value of vertixB is empty")
             if not isinstance(w, (int, float)):
                 raise ValueError(f"The value of Weight between {v_b} " +
                                  f"and {v_b} needs to be a number")
@@ -111,6 +111,8 @@ def validate_graph_entry(path: str):
             raise ValueError("Graph can't be empty")
 
         return edges
+
+    return None
 
 
 def validate_vertices_entry(path: str, v_a: str, v_b: str):
