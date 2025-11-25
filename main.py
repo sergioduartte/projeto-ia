@@ -1,3 +1,7 @@
+"""
+Classe responsável pela CLI com o usuário.
+"""
+import json
 import argparse
 
 from core.build_graph import build_graph
@@ -5,6 +9,10 @@ from core.dijkstra import dijkstra
 
 
 def main():
+    """
+    Fluxo principal do programa.
+    Define os parâmetros de entrada e faz as chamadas ao módulo build_graph e dijkstra.
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("json", type=str, help="Path to the json file")
     parser.add_argument("-s", "--start", type=str, required=True, help="Origin city")
@@ -12,17 +20,20 @@ def main():
 
     args = parser.parse_args()
 
-    # queria colocar alguma instrução em caso de erro
-
     try:
         graph = build_graph(args.json)
-    except Exception as exc:
-        print("Error in building graph: {exc}") 
-    
+    except FileNotFoundError as exc:
+        print(f"JSON file can't be found: {exc}")
+    except json.JSONDecodeError as exc:
+        print(f"JSON file isn't valid: {exc}")
+    except ValueError as exc:
+        print(f"The graph isn't valid: {exc}")
     try:
         dist, path = dijkstra(graph, args.start, args.end)
-    except Exception as exc:
-        print("Error in running Dijkstra: {exc}") 
+    except AttributeError as exc:
+        print(f"Some of the parameters are None: {exc}")
+    except ValueError as exc:
+        print(f"Graph empty or with invalid nodes/weights: {exc}")
 
     print(f"The shortest path distance is {dist:.1f} km")
     print("Path:", ", ".join(path))

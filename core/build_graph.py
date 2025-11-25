@@ -15,9 +15,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 def build_graph(path):
     '''
-    Abre o arquivo através do seu caminho e transforma o conteudo json em variaveis
-    Tudo vira um dicionario no formato -> 'edges': [['A', 'B', 5], ['B', 'C', 7]]
-    O valor da chave é uma lista de listas de tamanho 3 sendo [node, terminal, weight]
+    Abre o arquivo através do seu caminho e transforma o conteudo json em variaveis.
+    Tudo vira um dicionario no formato -> 'edges': [['A', 'B', 5], ['B', 'C', 7]].
+    O valor da chave é uma lista de listas de tamanho 3 sendo [node, terminal, weight].
     '''
     validator.validate_path(path)
     validator.validate_graph_entry(path)

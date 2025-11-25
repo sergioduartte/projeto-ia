@@ -8,7 +8,7 @@ from util import validator
 
 def dijkstra(digraph: nx.DiGraph, start: str, end: str) -> tuple[float|None, list[str]]:
     """
-    Encontra o caminho mais curto entre os nós start e end
+    Encontra o caminho mais curto entre os nós start e end.
     Retorna uma tupla com a distância total e a lista de nós no caminho.
     Se não houver caminho, retorna (float('inf'), None).
     """
@@ -53,16 +53,16 @@ graph.add_edge("C", "B", weight=1)
 graph.add_edge("B", "D", weight=5)
 
 # start = end
-dist, path = dijkstra(graph, "A", "A")
-assert dist == 0
-assert path == ["A"]
+shortest_dist, shortest_path = dijkstra(graph, "A", "A")
+assert shortest_dist == 0
+assert shortest_path == ["A"]
 
 # A → C → B < A → B
-dist, path = dijkstra(graph, "A", "B")
-assert dist == 3
-assert path == ["A", "C", "B"]
+shortest_dist, shortest_path = dijkstra(graph, "A", "B")
+assert shortest_dist == 3
+assert shortest_path == ["A", "C", "B"]
 
 # no path of B to C
-dist, path = dijkstra(graph, "B", "C")
-assert dist == float("inf")
-assert path is None
+shortest_dist, shortest_path = dijkstra(graph, "B", "C")
+assert shortest_dist == float("inf")
+assert shortest_path is None
